@@ -1,6 +1,8 @@
 # ShopSphere
 Infrastructure Diagram 
-![Uploading Untitled Diagram.drawio (3).png…]()
+
+<img width="1622" height="902" alt="Untitled Diagram drawio (3)" src="https://github.com/user-attachments/assets/9ec9c8fa-1d13-4c92-a05f-597f9e026679" />
+
 
 
 Microservices e-commerce demo built as the application for the AWS DevOps assignment
