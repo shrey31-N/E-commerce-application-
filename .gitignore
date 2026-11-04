@@ -1,0 +1,17 @@
+# Secrets and credentials - never commit
+.env
+*.pem
+*.key
+*.tfvars
+!example.tfvars
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Dependencies and build output
+node_modules/
+dist/
+
+# Runtime data
+data/
+*.log

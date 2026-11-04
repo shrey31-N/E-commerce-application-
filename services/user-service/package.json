@@ -1,0 +1,17 @@
+{
+  "name": "shopsphere-user-service",
+  "version": "1.0.0",
+  "description": "ShopSphere User Service - registration and login",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "prom-client": "^15.1.3"
+  }
+}

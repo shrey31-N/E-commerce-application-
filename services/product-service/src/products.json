@@ -1,0 +1,14 @@
+[
+  { "id": 1, "name": "Wireless Headphones", "category": "Electronics", "price": 2499, "stock": 40, "image": "🎧", "description": "Over-ear Bluetooth headphones with 30-hour battery life and active noise reduction." },
+  { "id": 2, "name": "Smart Watch", "category": "Electronics", "price": 3999, "stock": 25, "image": "⌚", "description": "Fitness tracking smartwatch with heart-rate monitor, GPS and 7-day battery." },
+  { "id": 3, "name": "Mechanical Keyboard", "category": "Electronics", "price": 3299, "stock": 30, "image": "⌨️", "description": "Compact 75% hot-swappable mechanical keyboard with tactile switches." },
+  { "id": 4, "name": "Portable Power Bank", "category": "Electronics", "price": 1299, "stock": 80, "image": "🔋", "description": "20,000 mAh fast-charging power bank with dual USB-C output." },
+  { "id": 5, "name": "Running Shoes", "category": "Fashion", "price": 2999, "stock": 50, "image": "👟", "description": "Lightweight breathable running shoes with cushioned sole." },
+  { "id": 6, "name": "Cotton T-Shirt", "category": "Fashion", "price": 599, "stock": 120, "image": "👕", "description": "Soft 100% cotton crew-neck t-shirt, regular fit." },
+  { "id": 7, "name": "Backpack", "category": "Fashion", "price": 1799, "stock": 60, "image": "🎒", "description": "Water-resistant 25L backpack with laptop compartment." },
+  { "id": 8, "name": "Sunglasses", "category": "Fashion", "price": 899, "stock": 70, "image": "🕶️", "description": "UV400 polarized sunglasses with a lightweight frame." },
+  { "id": 9, "name": "Ceramic Coffee Mug", "category": "Home", "price": 349, "stock": 200, "image": "☕", "description": "350 ml hand-glazed ceramic mug, microwave and dishwasher safe." },
+  { "id": 10, "name": "Desk Lamp", "category": "Home", "price": 1199, "stock": 45, "image": "💡", "description": "LED desk lamp with adjustable brightness and colour temperature." },
+  { "id": 11, "name": "Yoga Mat", "category": "Sports", "price": 799, "stock": 90, "image": "🧘", "description": "6 mm non-slip yoga mat with carrying strap." },
+  { "id": 12, "name": "Stainless Steel Bottle", "category": "Sports", "price": 699, "stock": 150, "image": "🍶", "description": "1 litre insulated bottle that keeps drinks cold for 24 hours." }
+]
