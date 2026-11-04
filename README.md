@@ -1,5 +1,7 @@
 # ShopSphere
 Infrastructure Diagram 
+![Uploading Untitled Diagram.drawio (3).png…]()
+
 
 Microservices e-commerce demo built as the application for the AWS DevOps assignment
 (GitHub → Jenkins → Docker → ECR → EC2, monitored with Prometheus + Grafana).
