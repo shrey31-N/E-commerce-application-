@@ -1,33 +1,49 @@
-pipeline{
+
+pipeline {
     agent any
-    
-    options{
+
+    options {
         timestamps()
         disableConcurrentBuilds()
     }
 
-    stages{
-        stage("Source Checkout"){
-            steps{
-                echo 'Checking out source code'
-                checkout scm
+    stages {
+
+        stage('Source Checkout') {
+            steps {
+                echo 'Source code checked out by Jenkins SCM'
             }
         }
-        stage("Configuration Validation"){
-            steps{
+
+        stage('Prepare Environment') {
+            steps {
+                bat '''
+                    if not exist .env (
+                        if not exist .env.example (
+                            echo ERROR: .env.example is missing
+                            exit /b 1
+                        )
+                        copy .env.example .env
+                    )
+                '''
+            }
+        }
+
+        stage('Configuration Validation') {
+            steps {
                 bat 'docker compose config -q'
                 echo 'Docker Compose configuration is valid'
-
             }
         }
-        stage("Build Docker Images"){
-            steps{
+
+        stage('Build Docker Images') {
+            steps {
                 bat 'docker compose build'
-
             }
         }
-        stage("Application Tests"){
-            steps{
+
+        stage('Application Tests') {
+            steps {
                 dir('services/user-service') {
                     bat 'npm test --if-present'
                 }
@@ -39,18 +55,21 @@ pipeline{
                 dir('services/order-service') {
                     bat 'npm test --if-present'
                 }
-
-                echo 'Available application tests completed'
-                
             }
         }
     }
-    post{
-        success{
-            echo "CI pipeline completed successfully..!"
+
+    post {
+        success {
+            echo 'CI pipeline completed successfully!'
         }
+
         failure {
-            echo "CI pipeline faild, check console logs......"
+            echo 'CI pipeline failed. Check console output.'
+        }
+
+        always {
+            echo 'Pipeline execution finished.'
         }
     }
 }
