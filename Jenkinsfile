@@ -45,14 +45,17 @@ pipeline {
         stage('Application Tests') {
             steps {
                 dir('services/user-service') {
+                    bat 'npm ci'
                     bat 'npm test --if-present'
                 }
 
                 dir('services/product-service') {
+                    bat 'npm ci'
                     bat 'npm test --if-present'
                 }
 
                 dir('services/order-service') {
+                    bat 'npm ci'
                     bat 'npm test --if-present'
                 }
             }
