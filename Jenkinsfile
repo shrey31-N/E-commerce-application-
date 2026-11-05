@@ -7,6 +7,13 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    environment {
+        AWS_REGION = 'ap-south-1'
+        AWS_ACCOUNT_ID = '476627803546'
+        ECR_REGISTRY = '476627803546.dkr.ecr.ap-south-1.amazonaws.com'
+        IMAGE_TAG = 'v1.0.0'
+    }
+
     stages {
 
         stage('Source Checkout') {
@@ -60,15 +67,74 @@ pipeline {
                 }
             }
         }
+
+        stage('AWS ECR Authentication') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'aws-ecr-jenkins',
+                        usernameVariable: 'AWS_ACCESS_KEY_ID',
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    bat '''
+                        aws --version
+
+                        aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %ECR_REGISTRY%
+
+                        if errorlevel 1 exit /b 1
+                    '''
+                }
+            }
+        }
+
+        stage('Push Images to ECR') {
+            steps {
+                bat '''
+                    docker image inspect user-service:%IMAGE_TAG% >nul 2>&1
+                    if errorlevel 1 (
+                        echo ERROR: user-service image not found
+                        exit /b 1
+                    )
+
+                    docker image inspect product-service:%IMAGE_TAG% >nul 2>&1
+                    if errorlevel 1 (
+                        echo ERROR: product-service image not found
+                        exit /b 1
+                    )
+
+                    docker image inspect order-service:%IMAGE_TAG% >nul 2>&1
+                    if errorlevel 1 (
+                        echo ERROR: order-service image not found
+                        exit /b 1
+                    )
+
+                    docker tag user-service:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG%
+                    docker tag product-service:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-product:%IMAGE_TAG%
+                    docker tag order-service:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG%
+
+                    docker push %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    docker push %ECR_REGISTRY%/shopsphere-product:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    docker push %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    echo All three images pushed successfully!
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo 'CI pipeline completed successfully!'
+            echo 'CI/CD image publishing pipeline completed successfully!'
         }
 
         failure {
-            echo 'CI pipeline failed. Check console output.'
+            echo 'Pipeline failed. Check console output.'
         }
 
         always {
