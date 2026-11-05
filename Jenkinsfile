@@ -108,10 +108,16 @@ pipeline {
                         echo ERROR: order-service image not found
                         exit /b 1
                     )
+                    docker image inspect frontend:%IMAGE_TAG% >nul 2>&1
+                    if errorlevel 1 (
+                        echo ERROR: Frontend image not found
+                        exit /b 1
+                    )
 
                     docker tag user-service:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG%
                     docker tag product-service:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-product:%IMAGE_TAG%
                     docker tag order-service:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG%
+                    docker tag frontend:%IMAGE_TAG% %ECR_REGISTRY%/shopsphere-frontend:%IMAGE_TAG%
 
                     docker push %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG%
                     if errorlevel 1 exit /b 1
@@ -120,6 +126,9 @@ pipeline {
                     if errorlevel 1 exit /b 1
 
                     docker push %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    docker push %ECR_REGISTRY%/shopsphere-frontend:%IMAGE_TAG%
                     if errorlevel 1 exit /b 1
 
                     echo All three images pushed successfully!
