@@ -9,8 +9,8 @@ pipeline {
 
     environment {
         AWS_REGION = 'ap-south-1'
-        AWS_ACCOUNT_ID = '476627803546'
-        ECR_REGISTRY = '476627803546.dkr.ecr.ap-south-1.amazonaws.com'
+        AWS_ACCOUNT_ID = '507941515612'
+        ECR_REGISTRY = '507941515612.dkr.ecr.ap-southeast-2.amazonaws.com'
         IMAGE_TAG = 'v1.0.0'
     }
 
