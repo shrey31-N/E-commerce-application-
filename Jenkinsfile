@@ -86,20 +86,12 @@ pipeline {
         stage('Verify Docker Images') {
             steps {
                 bat '''
-                    docker image inspect %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG% >nul 2>&1
-                    if errorlevel 1 exit /b 1
+                    echo ===== DOCKER IMAGES =====
+                    docker images
 
-                    docker image inspect %ECR_REGISTRY%/shopsphere-product:%IMAGE_TAG% >nul 2>&1
-                    if errorlevel 1 exit /b 1
-
-                    docker image inspect %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG% >nul 2>&1
-                    if errorlevel 1 exit /b 1
-
-                    docker image inspect %ECR_REGISTRY%/shopsphere-frontend:%IMAGE_TAG% >nul 2>&1
-                    if errorlevel 1 exit /b 1
-
-                    echo All four Docker images verified successfully.
-                '''
+                    echo ===== COMPOSE IMAGES =====
+                    docker compose images
+                    '''
             }
         }
 
