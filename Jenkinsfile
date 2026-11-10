@@ -152,6 +152,25 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to EC2 through SSM') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                    credentialsId: 'aws-ecr-jenkins',
+                    usernameVariable: 'AWS_ACCESS_KEY_ID',
+                    passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) 
+                {
+                    bat '''
+                        powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\\deploy-ssm.ps1 -ImageTag %IMAGE_TAG%
+
+                        if errorlevel 1 exit /b 1
+                    '''
+                }
+            }
+        }
     }
 
     post {
