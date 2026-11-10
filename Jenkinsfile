@@ -71,29 +71,53 @@ pipeline {
             }
         }
 
+        
         stage('Build Docker Images') {
             steps {
                 bat '''
-                    echo Building release %IMAGE_TAG%
+                    echo Building ShopSphere images: %IMAGE_TAG%
 
-                    docker compose build user-service product-service order-service frontend
-
+                    docker build -t %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG% -f services/user-service/Dockerfile services/user-service
                     if errorlevel 1 exit /b 1
+
+                    docker build -t %ECR_REGISTRY%/shopsphere-product:%IMAGE_TAG% -f services/product-service/Dockerfile services/product-service
+                    if errorlevel 1 exit /b 1
+
+                    docker build -t %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG% -f services/order-service/Dockerfile services/order-service
+                    if errorlevel 1 exit /b 1
+
+                    docker build -t %ECR_REGISTRY%/shopsphere-frontend:%IMAGE_TAG% -f frontend/Dockerfile frontend
+                    if errorlevel 1 exit /b 1
+
+                    echo All four images built successfully.
                 '''
-            }
+                }
         }
+
+
 
         stage('Verify Docker Images') {
             steps {
                 bat '''
-                    echo ===== DOCKER IMAGES =====
                     docker images
 
-                    echo ===== COMPOSE IMAGES =====
-                    docker compose images
-                    '''
+                    docker image inspect %ECR_REGISTRY%/shopsphere-user:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    docker image inspect %ECR_REGISTRY%/shopsphere-product:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    docker image inspect %ECR_REGISTRY%/shopsphere-order:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    docker image inspect %ECR_REGISTRY%/shopsphere-frontend:%IMAGE_TAG%
+                    if errorlevel 1 exit /b 1
+
+                    echo All four images verified.
+                '''
             }
         }
+
 
         stage('Authenticate and Push to ECR') {
             steps {
