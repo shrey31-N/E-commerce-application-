@@ -1,7 +1,7 @@
 # ShopSphere
 Infrastructure Diagram 
 
-<img width="1622" height="902" alt="Untitled Diagram drawio (3)" src="https://github.com/user-attachments/assets/9ec9c8fa-1d13-4c92-a05f-597f9e026679" />
+<img width="2002" height="1162" alt="Untitled Diagram drawio (1)" src="https://github.com/user-attachments/assets/1f4a16f0-20a3-46f5-9ad4-2ce6a00d51fb" />
 
 
 
