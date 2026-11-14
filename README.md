@@ -283,7 +283,7 @@ The Node Exporter port is not exposed publicly through the EC2 security group.
 | 3001 | User Service | Internal user API |
 | 3002 | Product Service | Internal product API |
 | 3003 | Order Service | Internal order API |
-| 8080 | Jenkins | CI/CD server |
+| 9090 | Jenkins | CI/CD server |
 | 9091 | Prometheus | Metrics collection and query interface |
 | 9100 | Node Exporter | EC2 host metrics |
 | 9115 | Blackbox Exporter | Website availability probes |
